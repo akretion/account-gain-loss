@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  account_gain_loss for OpenERP
+  Copyright (C) 2012 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>
+  The licence is in the file __openerp__.py
+-->
+
+<openerp>
+    <data>
+    
+        <!-- INHERITED VIEW FOR THE OBJECT : account_move_line_reconcile_writeoff -->
+
+        <record id="account_move_line_reconcile_writeoff" model="ir.ui.view">
+            <field name="name">account_gain_loss.account_move_line_reconcile_writeoff.view_form</field>
+            <field name="model">account.move.line.reconcile.writeoff</field>
+            <field name="inherit_id" ref="account.account_move_line_reconcile_writeoff" />
+            <field eval="16" name="priority"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="journal_id" position="after">
+                        <field name="company_id" invisible="1"/>
+                        <field name="writeoff_reason"
+                               on_change="writeoff_reason_change(company_id, writeoff_reason, writeoff_type, context)"/>
+                    </field>
+                    <field name="writeoff_acc_id" position="replace">
+                        <field name="writeoff_type" nolabel="1"/>
+                        <field name="writeoff_acc_id" domain="[('type', '&lt;&gt;', 'view')]" nolabel="1"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</openerp>

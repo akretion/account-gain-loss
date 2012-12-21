@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  account_gain_loss for OpenERP
+  Copyright (C) 2012 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>
+  The licence is in the file __openerp__.py
+-->
+
+<openerp>
+    <data>
+    
+        <!-- res.config form view -->
+        <record model="ir.ui.view" id="view_account_settings_gain_loss_form">
+            <field name="name">account.config.settings.inherit</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="model">account.config.settings</field>
+            <field name="priority">30</field>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='account_config']" position="inside">
+                    <div>
+                        <field name="income_other_account_id"/>
+                        <field name="expense_other_account_id"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
