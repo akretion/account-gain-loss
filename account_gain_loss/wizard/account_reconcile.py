@@ -61,19 +61,13 @@ class account_move_line_reconcile_writeoff(osv.osv_memory):
 
 
     def writeoff_reason_change(self, cr, uid, ids, company_id, writeoff_reason, writeoff_type, context=None):
-        result = {}
-        if writeoff_reason and writeoff_type:
-            company = self.pool.get('res.company').browse(cr, uid, company_id, context=context)
-            if writeoff_reason == 'exchange':
-                if writeoff_type == 'expense':
-                    account_id = company.expense_currency_exchange_account_id.id
-                elif writeoff_type == 'income':
-                    account_id = company.income_currency_exchange_account_id.id
-            elif writeoff_reason == 'various':
-                if writeoff_type == 'expense':
-                    account_id = company.expense_other_account_id.id
-                elif writeoff_type == 'income':
-                    account_id = company.income_other_account_id.id
-            result['writeoff_acc_id'] = account_id
-        return {'value': result}
+        company_obj = self.pool.get('res.company')
+        account_id, journal_id = company_obj.get_write_off_information(cr, uid,\
+                        company_id, writeoff_reason, writeoff_type, context=context)
+        return {
+            'value': {
+                'writeoff_acc_id': account_id,
+                'journal_id': journal_id,
+            },
+        }
 
